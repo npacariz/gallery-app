@@ -41,6 +41,13 @@ export default class AuthService {
       this.setAxiosDefaultAuthorizationHeader();
     });
   }
+
+  /**
+   * Cheking if user token is in local storage
+   */
+  isAuthenticated() {
+    return !!localStorage.getItem('token');
+  }
 }
 
 export const auth = new AuthService();
