@@ -22,7 +22,7 @@
                     <router-link  class="nav-link" :to="{name:'register'}">Register</router-link>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" role="button" @click="logout">Logout</a>
                 </li>
             </ul>
         </div>
@@ -30,6 +30,16 @@
    </div>
 </template>
 <script>
-export default {};
+import { auth } from "./../services/AuthService.js";
+export default {
+  name: "NavBar",
+  methods: {
+    logout() {
+      auth.logout().then(response => {
+        this.$router.push({ name: "login" });
+      });
+    }
+  }
+};
 </script>
 

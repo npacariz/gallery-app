@@ -1,22 +1,43 @@
 <template>
     <div>
         <h1>Please login</h1>
-        <form>
+        <form @submit.prevent="login">
             <div class="form-group">
-                <label for="exampleInputEmail1">Email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">    
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" v-model="username">    
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" v-model="password">
             </div>
+            <p class="alert alert-danger" v-if="error">Bad Credentials</p>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </template>
 <script>
+import { auth } from "./../services/AuthService.js";
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+      error: null
+    };
+  },
+  methods: {
+    login() {
+      auth
+        .login(this.username, this.password)
+        .then(() => {
+          this.$router.push({ name: "all-galleries" });
+        })
+        .catch(error => {
+          this.error = error.response.data.error;
+        });
+    }
+  }
 };
 </script>
 <style scoped>
