@@ -1,13 +1,35 @@
 <template>
     <div>
-        <nav class="navbar navbar-dark bg-primary">
-            <a class="navbar-brand" href="#">Gallery App</a>
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+             <router-link  class="navbar-brand" :to="{name:'all-galleries'}">Gallery App</router-link>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <router-link  class="nav-link" :to="{name:'all-galleries'}">All Galleries</router-link>
+                </li>
+                 <li class="nav-item">
+                    <router-link  class="nav-link" :to="{name:'my-galleries'}">My Galleries</router-link>
+                </li>
+                 <li class="nav-item ">
+                     <router-link  class="nav-link" :to="{name:'create-gallery'}">Create Gallery</router-link>
+                </li>
+            </ul>
+             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item ">
+                    <router-link  class="nav-link" :to="{name:'login'}">Login</router-link>
+                </li>
+                 <li class="nav-item ">
+                    <router-link  class="nav-link" :to="{name:'register'}">Register</router-link>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
         </nav>
-    </div>
+   </div>
 </template>
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
