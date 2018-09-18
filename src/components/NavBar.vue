@@ -40,7 +40,7 @@ export default {
     ]),
     
     logout() {
-      auth.logout().then(response => {
+      auth.logout().then(() => {
         this.changeAuthentication()
         this.$router.push({ name: "login" });
       });

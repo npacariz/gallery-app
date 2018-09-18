@@ -36,6 +36,7 @@
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 import { auth } from "./../services/AuthService.js";
 export default {
   name: "Register",
@@ -53,10 +54,14 @@ export default {
     };
   },
   methods: {
+     ...mapActions([
+      "changeAuthentication"
+    ]),
     register() {
       auth
         .register(this.newUser)
         .then(() => {
+          this.changeAuthentication();
           this.$router.push({ name: "all-galleries" });
         })
         .catch(error => {
