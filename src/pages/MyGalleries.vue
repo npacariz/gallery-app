@@ -14,9 +14,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
       galleryService.getAll().then(()=>{
-           
           next();
-         
       })
       
   }

@@ -7,8 +7,8 @@ export default class GalleryService {
     /**
      * Method for getting galleries for AllGalleries component 
      */
-    getAll(){
-        return axios.get('galleries');
+    getAll(page = 1, term=''){
+        return axios.get(`galleries?page=${page}&term=${term}`);
     }
 }
 
