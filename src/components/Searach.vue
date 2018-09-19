@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" v-model="searchTerm">
+        <input type="text" @input="clearSearch" v-model="searchTerm">
         <button @click="filterGalleries">Filter</button>
     </div>  
 </template>
@@ -14,6 +14,11 @@ export default {
   methods: {
     filterGalleries() {
       this.$emit("searchTerm", this.searchTerm);
+    },
+    clearSearch() {
+      if (event.target.value === "") {
+        this.filterGalleries();
+      }
     }
   }
 };

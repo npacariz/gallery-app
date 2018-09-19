@@ -22,6 +22,12 @@ export default class GalleryService {
   getMyGalleries(page = 1, term = "") {
     return axios.get(`my-galleries?page=${page}&term=${term}`);
   }
+  /**
+   * Method for getting galleries for AuthorGalleries component
+   */
+  getAuthorGalleries(id, page = 1, term = "") {
+    return axios.get(`author-galleries?page=${page}&term=${term}&id=${id}`);
+  }
 }
 
 export const galleryService = new GalleryService();
