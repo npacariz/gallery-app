@@ -28,6 +28,13 @@ export default class GalleryService {
   getAuthorGalleries(id, page = 1, term = "") {
     return axios.get(`author-galleries?page=${page}&term=${term}&id=${id}`);
   }
+
+  /**
+   * Method for adding new gallery to database
+   */
+  addGallery(newGallery) {
+    return axios.post('galleries', newGallery)
+  }
 }
 
 export const galleryService = new GalleryService();

@@ -41,17 +41,30 @@
             </li>
           </ul>
         </div>
+        <!-- adding comment form -->
+        <div>
+            <form @submit.prevent="addComment">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Add comment</label>
+                <textarea v-model="body" id="" cols="30" rows="10"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
 </template>
 <script>
 import { galleryService } from "./../services/GalleryService.js";
+import { commentService } from "./../services/CommentService.js";
 export default {
   name: "MyGalleries",
   data() {
     return {
       slide: 0,
       sliding: null,
-      gallery: {}
+      gallery: {},
+      body: '',
+      errors: {},
     };
   },
   methods: {
@@ -60,6 +73,16 @@ export default {
     },
     onSlideEnd() {
       this.sliding = false;
+    },
+    addComment() {
+     
+      commentService.addComment(this.gallery.id,this.body).then((response) =>{
+         this.gallery.comments.push(response.data[0])
+         this.body = ''
+      }).then((error) =>{
+        this.errors = error;
+      })
+      
     }
   },
   beforeRouteEnter(to, from, next) {
