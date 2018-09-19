@@ -10,60 +10,51 @@
     </div>
 </template>
 <script>
-import { galleryService } from "./../services/GalleryService.js"
-import ListOfGalleries from "./../components/ListOfGalleries.vue"
-import Searach from "./../components/Searach.vue"
+import { galleryService } from "./../services/GalleryService.js";
+import ListOfGalleries from "./../components/ListOfGalleries.vue";
+import Searach from "./../components/Searach.vue";
 
 export default {
-    name: "AllGalleries",
-    components:{
-        ListOfGalleries,
-        Searach
+  name: "AllGalleries",
+  components: {
+    ListOfGalleries,
+    Searach
+  },
+  data() {
+    return {
+      galleries: [],
+      page: 1,
+      count: 0,
+      searchTerm: ""
+    };
+  },
+  methods: {
+    loadMore() {
+      this.page += 1;
+      this.getGalleries();
     },
-    data() {
-        return {
-            galleries: [],
-            page: 1,
-            count: 0,
-            searchTerm: ''
-        }
+    searchDatabase(value) {
+      this.searchTerm = value;
+      this.searchGalleries();
     },
-    methods:{
-        loadMore() {
-            this.page +=1;
-            this.getGalleries();
-        },
-        searchDatabase(value) {
-           this.searchTerm = value;
-            this.searchGalleries();
-        },
-        getGalleries() {
-            galleryService.getAll(this.page, this.searchTerm).then((response)=>{
-                this.galleries.push(...response.data.galleries)
-            })
-        },
-        searchGalleries() {
-            this.count = 0,
-            this.page = 1
-          
-            galleryService.getAll(this.page, this.searchTerm).then((response)=>{
-                this.galleries = response.data.galleries; 
-                
-            })
-        }
-        
+    getGalleries() {
+      galleryService.getAll(this.page, this.searchTerm).then(response => {
+        this.galleries.push(...response.data.galleries);
+      });
     },
-    computed: {
-
-    },
-    beforeRouteEnter(to, from, next) {
-        galleryService.getAll().then((response)=>{
-            next((vm)=>{
-                vm.galleries = response.data.galleries;
-                vm.count = response.data.count;
-            })
-        })
+    searchGalleries() {
+      this.page = 1;
+      galleryService.getAll(this.page, this.searchTerm).then(response => {
+        this.galleries = response.data.galleries;
+        this.count = response.data.count;
+      });
     }
-}
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.searchGalleries();
+    });
+  }
+};
 </script>
 

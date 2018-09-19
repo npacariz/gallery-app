@@ -5,6 +5,7 @@ import MyGalleries from "./../pages/MyGalleries.vue";
 import CreateGallery from "./../pages/CreateGallery.vue";
 import Login from "./../pages/Login.vue";
 import Register from "./../pages/Register.vue";
+import ViewGallery from "./../pages/ViewGallery.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
     path: "/",
     component: AllGalleries,
     name: "all-galleries"
+  },
+  {
+    path: "/galleries/:id",
+    component: ViewGallery,
+    name: "view-gallery"
   },
   {
     path: "/my-galleries",
