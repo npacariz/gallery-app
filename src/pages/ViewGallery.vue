@@ -19,10 +19,12 @@
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd">
             <div v-for="image in gallery.images" :key="image.id">   
+              <a :href="image.image_url"  target="_blank">
                 <b-carousel-slide>
                     <img slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                        :src="image.image_url" alt="image slot"><a :href="image.image_url"></a>
+                        :src="image.image_url" alt="image slot">
                 </b-carousel-slide>
+              </a>
             </div>
         </b-carousel>
         <!-- Comments -->
@@ -39,7 +41,6 @@
             </li>
           </ul>
         </div>
-       
     </div>
 </template>
 <script>

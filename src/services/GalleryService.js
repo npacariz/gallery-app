@@ -10,12 +10,17 @@ export default class GalleryService {
   getAll(page = 1, term = "") {
     return axios.get(`galleries?page=${page}&term=${term}`);
   }
-
   /**
    * Method for getting single gallery with images and comments
    */
   show(id) {
     return axios.get(`galleries/${id}`);
+  }
+  /**
+   * Method for getting galleries for MyGalleries component
+   */
+  getMyGalleries(page = 1, term = "") {
+    return axios.get(`my-galleries?page=${page}&term=${term}`);
   }
 }
 

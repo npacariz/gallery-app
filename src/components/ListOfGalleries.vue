@@ -12,7 +12,7 @@
         <tbody>
             <tr v-for="gallery in galleries" :key="gallery.id">
             <th><router-link :to="{name:'view-gallery', params:{id:gallery.id}}">{{gallery.title}} </router-link></th>
-             <th>{{gallery.user.first_name}} {{gallery.user.first_name}}</th>
+             <th>{{gallery.user.first_name}} {{gallery.user.last_name}}</th>
             <th><img :src="gallery.images[0].image_url" alt="img" width="200px"></th>
             <th>{{gallery.created_at}}</th>
             </tr>

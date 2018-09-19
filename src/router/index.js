@@ -42,7 +42,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  history,
+  mode: "history",
   routes
 });
 

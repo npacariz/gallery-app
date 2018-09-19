@@ -5,7 +5,7 @@
              <router-link  class="navbar-brand" :to="{name:'all-galleries'}">Gallery App</router-link>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <router-link   class="nav-link" :to="{name:'all-galleries'}">All Galleries</router-link>
+                    <router-link   class="nav-link" :to="{name:'all-galleries' }">All Galleries</router-link>
                 </li>
                  <li class="nav-item">
                     <router-link v-if="isAuthenticated"  class="nav-link" :to="{name:'my-galleries'}">My Galleries</router-link>
@@ -30,26 +30,21 @@
    </div>
 </template>
 <script>
-import { mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { auth } from "./../services/AuthService.js";
 export default {
   name: "NavBar",
   methods: {
-    ...mapActions([
-        "changeAuthentication"
-    ]),
-    
+    ...mapActions(["changeAuthentication"]),
+
     logout() {
-      auth.logout().then(() => {
-        this.changeAuthentication()
-        this.$router.push({ name: "login" });
-      });
+      auth.logout();
+      this.changeAuthentication();
+      this.$router.push({ name: "login" });
     }
   },
   computed: {
-      ...mapGetters([
-          "isAuthenticated"
-      ])
+    ...mapGetters(["isAuthenticated"])
   }
 };
 </script>

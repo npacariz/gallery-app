@@ -1,15 +1,21 @@
 <template>
-    <input type="text" @input="searchTerm">
+    <div>
+        <input type="text" v-model="searchTerm">
+        <button @click="filterGalleries">Filter</button>
+    </div>  
 </template>
 <script>
 export default {
-
-    methods:{
-        searchTerm() {
-            const term = event.target.value;
-            this.$emit('searchTerm', term);
-        }
+  data() {
+    return {
+      searchTerm: ""
+    };
+  },
+  methods: {
+    filterGalleries() {
+      this.$emit("searchTerm", this.searchTerm);
     }
-}
+  }
+};
 </script>
 

@@ -2,11 +2,16 @@
     <div>
         <h1>All Galleries</h1>
         <searach @searchTerm="searchDatabase"></searach>
-        <list-of-galleries :galleries="galleries"></list-of-galleries>
-        <div v-if="count > galleries.length">
+        <div v-if="!errors">
+            <list-of-galleries :galleries="galleries"></list-of-galleries>
+        </div>
+        <div class="alert alert-info"
+              v-else>
+          <strong>{{errors}}</strong>
+        </div>
+        <div v-if="count > galleries.length && !errors">
              <button @click="loadMore">Load More</button>
         </div>
-
     </div>
 </template>
 <script>
@@ -25,29 +30,34 @@ export default {
       galleries: [],
       page: 1,
       count: 0,
-      searchTerm: ""
+      searchTerm: "",
+      errors: null
     };
   },
   methods: {
     loadMore() {
       this.page += 1;
-      this.getGalleries();
+      galleryService.getAll(this.page, this.searchTerm).then(response => {
+        this.galleries.push(...response.data.galleries);
+      });
     },
     searchDatabase(value) {
       this.searchTerm = value;
       this.searchGalleries();
     },
-    getGalleries() {
-      galleryService.getAll(this.page, this.searchTerm).then(response => {
-        this.galleries.push(...response.data.galleries);
-      });
-    },
     searchGalleries() {
       this.page = 1;
-      galleryService.getAll(this.page, this.searchTerm).then(response => {
-        this.galleries = response.data.galleries;
-        this.count = response.data.count;
-      });
+      galleryService
+        .getAll(this.page, this.searchTerm)
+        .then(response => {
+          this.errors = null;
+          this.galleries = response.data.galleries;
+          this.count = response.data.count;
+        })
+        .catch(error => {
+          this.errors = error.response.data.message;
+          this.galleries = [];
+        });
     }
   },
   beforeRouteEnter(to, from, next) {

@@ -26,10 +26,9 @@ export default class AuthService {
    *  Logout method, calling database to logout user;
    */
   logout() {
-    return axios.post(`auth/logout`).then(() => {
-      localStorage.removeItem("token");
-      delete axios.defaults.headers.common["Authorization"];
-    });
+    axios.post(`auth/logout`);
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
   }
   /**
    * Register method and automatically login user
@@ -46,7 +45,7 @@ export default class AuthService {
    * Cheking if user token is in local storage
    */
   isAuthenticated() {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem("token");
   }
 }
 
