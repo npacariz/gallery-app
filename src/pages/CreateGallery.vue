@@ -25,8 +25,7 @@
                 <button @click="addImage">Add image</button>
             </div>
             <button type="submit" class="btn btn-default" @click="saveNewGallery">Submit</button>
-            <button type="submit" class="btn btn-default" @click="editGallery">Update</button>
-            <button type="submit" class="btn btn-default" @click="">Cancel</button>
+            <button type="submit" class="btn btn-default" @click="cancel">Cancel</button>
         </form>
     </div>
 </template>
@@ -73,6 +72,10 @@ export default {
         );
     },
 
+    submitGallery() {
+      this.$route.params.id? this.editGallery() : this.saveNewGallery()
+    },
+
     saveNewGallery() {
       galleryService
         .addGallery(this.newGallery)
@@ -86,11 +89,22 @@ export default {
     editGallery() {
       galleryService.update(this.$route.params.id, this.newGallery).then(() => {
         this.$router.push({
-          name: "author-galleries",
+          name: "view-gallery",
           params: { id: this.$route.params.id }
         });
       });
-    }
+    },
+    cancel() {
+      if(this.$route.params.id) {
+        this.$router.push({
+          name: "view-gallery",
+          params: { id: this.$route.params.id }
+        });
+      }else {
+        this.$router.push({name: 'all-galleries'})
+      }
+      
+    },
   },
   beforeRouteEnter(to, from, next) {
     if (to.params.id) {
@@ -101,7 +115,6 @@ export default {
           response.data.images.forEach(image => {
             vm.newGallery.images.push(image.image_url);
           });
-
           vm.range = response.data.images.length;
         });
       });
