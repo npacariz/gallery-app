@@ -10,8 +10,8 @@ export default class AuthService {
    */
   login(email, password) {
     return axios.post(`auth/login`, { email, password }).then(response => {
-      const token = response.data.access_token;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user_id", response.data.user_id);
       this.setAxiosDefaultAuthorizationHeader();
     });
   }
@@ -28,6 +28,7 @@ export default class AuthService {
   logout() {
     axios.post(`auth/logout`);
     localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
     delete axios.defaults.headers.common["Authorization"];
   }
   /**
@@ -35,17 +36,23 @@ export default class AuthService {
    */
   register(newUser) {
     return axios.post(`auth/register`, newUser).then(response => {
-      const token = response.data.access_token;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user_id", response.data.user_id);
       this.setAxiosDefaultAuthorizationHeader();
     });
   }
-
   /**
-   * Cheking if user token is in local storage
+   * Checking if user token is in local storage
    */
   isAuthenticated() {
     return !!localStorage.getItem("token");
+  }
+
+  /**
+   * Checking for user id
+   */
+  gettingUserId() {
+    return localStorage.getItem("user_id");
   }
 }
 

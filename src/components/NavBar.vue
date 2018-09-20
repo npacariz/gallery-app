@@ -35,11 +35,12 @@ import { auth } from "./../services/AuthService.js";
 export default {
   name: "NavBar",
   methods: {
-    ...mapActions(["changeAuthentication"]),
+    ...mapActions(["changeAuthentication", "deleteUserId"]),
 
     logout() {
       auth.logout();
       this.changeAuthentication();
+      this.deleteUserId();
       this.$router.push({ name: "login" });
     }
   },

@@ -18,7 +18,7 @@
                     <input type="text" class="form-control" placeholder="image url" v-model="newGallery.images[index]">
                     <p class="alert alert-danger" v-if="errors.images">{{errors.images[0]}}</p>
                     <p class="alert alert-danger" v-if="errors[`images.${img-1}`]">Wrong format of image</p>
-                    <button @click="removeImage(index)">Remove</button>
+                    <button v-if="range !== 1" @click="removeImage(index)">Remove</button>
                     <button @click="moveUpOnePositon(index)">Up</button>
                     <button @click="moveDownOnePositon(index)">Down</button>
                 </div>
@@ -33,47 +33,55 @@ import { galleryService } from "./../services/GalleryService.js";
 
 export default {
   name: "CreateGallery",
-    data() {
-        return{
-            newGallery: {
-                title: '',
-                description: '',
-                images: []
-            },
-            range: 1,
-            errors:[]
-        }
+  data() {
+    return {
+      newGallery: {
+        title: "",
+        description: "",
+        images: []
+      },
+      range: 1,
+      errors: []
+    };
+  },
+  methods: {
+    addImage() {
+      this.range++;
     },
-    methods: {
-        addImage() {
-            this.range++;
-        },
-        removeImage(positon) {
-            this.newGallery.images.splice(positon,1)
-            this.range--;
-        },
-        moveUpOnePositon(positon){
-            if(positon !== 0) {
-                this.newGallery.images.splice(positon-1, 0,  this.newGallery.images.splice(positon, 1)[0] )
-            }
-            return 
-        },
-        moveDownOnePositon(positon) {
-            if(positon !== this.range-1)
-              this.newGallery.images.splice(positon, 0,  this.newGallery.images.splice(positon+1, 1)[0] )
-        },
+    removeImage(positon) {
+      this.newGallery.images.splice(positon, 1);
+      this.range--;
+    },
+    moveUpOnePositon(positon) {
+      if (positon !== 0) {
+        this.newGallery.images.splice(
+          positon - 1,
+          0,
+          this.newGallery.images.splice(positon, 1)[0]
+        );
+      }
+      return;
+    },
+    moveDownOnePositon(positon) {
+      if (positon !== this.range - 1)
+        this.newGallery.images.splice(
+          positon,
+          0,
+          this.newGallery.images.splice(positon + 1, 1)[0]
+        );
+    },
 
-        saveNewGallery() {
-            galleryService.addGallery(this.newGallery).then(() =>{
-               this.$router.push({ name: "all-galleries" });
-            }).catch((error)=>{
-                console.log( error.response.data.errors)
-                this.errors = error.response.data.errors
-            })
-        }
+    saveNewGallery() {
+      galleryService
+        .addGallery(this.newGallery)
+        .then(() => {
+          this.$router.push({ name: "all-galleries" });
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
     }
-
-
+  }
 };
 </script>
 <style scoped>

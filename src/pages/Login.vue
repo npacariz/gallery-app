@@ -28,14 +28,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "changeAuthentication"
-    ]),
+    ...mapActions(["changeAuthentication", "checkUserId"]),
     login() {
       auth
         .login(this.username, this.password)
         .then(() => {
           this.changeAuthentication();
+          this.checkUserId();
           this.$router.push({ name: "all-galleries" });
         })
         .catch(error => {

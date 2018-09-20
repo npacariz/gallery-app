@@ -27,26 +27,36 @@
               </a>
             </div>
         </b-carousel>
+        <!-- Button for deleting gallery -->
+        <div v-if="isAuthenticated && getUserId === gallery.user_id">
+           <button @click="deleteGallery">Delete Gallery</button>
+        </div>
         <!-- Comments -->
         <div>
           <h5>Comments: </h5>
           <ul class="list-group">
             <li class="list-group-item disabled"
-                v-for="comment in gallery.comments"
+                v-for="(comment, index) in gallery.comments"
                 :key="comment.id"
             >
               <p>{{comment.body}}</p>
               <p>Commented by: {{comment.user.first_name}} {{comment.user.last_name}}</p>
               <small>{{comment.created_at}}</small>
+               <button v-if="comment.user_id === getUserId" 
+                        @click="deleteComment(comment.id, index)"
+                        >
+                        Delete
+                </button>
             </li>
           </ul>
         </div>
         <!-- adding comment form -->
-        <div>
+        <div  v-if="isAuthenticated">
             <form @submit.prevent="addComment">
               <div class="form-group">
                 <label for="exampleInputEmail1">Add comment</label>
                 <textarea v-model="body" id="" cols="30" rows="10"></textarea>
+                <p class="alert alert-danger" v-if="errors.body">{{errors.body[0]}}</p>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -56,6 +66,7 @@
 <script>
 import { galleryService } from "./../services/GalleryService.js";
 import { commentService } from "./../services/CommentService.js";
+import { mapGetters } from "vuex";
 export default {
   name: "MyGalleries",
   data() {
@@ -63,8 +74,8 @@ export default {
       slide: 0,
       sliding: null,
       gallery: {},
-      body: '',
-      errors: {},
+      body: "",
+      errors: {}
     };
   },
   methods: {
@@ -74,16 +85,31 @@ export default {
     onSlideEnd() {
       this.sliding = false;
     },
+    deleteGallery() {
+      if (confirm("Are you sure you want to delete gallery?"))
+        galleryService.delete(this.gallery.id).then(() => {
+          this.$router.push({ name: "all-galleries" });
+        });
+    },
+    deleteComment(id, index) {
+      commentService.delete(id).then(() => {
+        this.gallery.comments.splice(index, 1);
+      });
+    },
     addComment() {
-     
-      commentService.addComment(this.gallery.id,this.body).then((response) =>{
-         this.gallery.comments.push(response.data[0])
-         this.body = ''
-      }).then((error) =>{
-        this.errors = error;
-      })
-      
+      commentService
+        .addComment(this.gallery.id, this.body)
+        .then(response => {
+          this.gallery.comments.push(response.data[0]);
+          this.body = "";
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
+        });
     }
+  },
+  computed: {
+    ...mapGetters(["isAuthenticated", "getUserId"])
   },
   beforeRouteEnter(to, from, next) {
     galleryService.show(to.params.id).then(response => {
