@@ -30,13 +30,19 @@ export default class GalleryService {
   }
 
   /**
-   * Method for adding new gallery to database
+   * Method for calling database to adding new gallery to database
    */
   addGallery(newGallery) {
     return axios.post("galleries", newGallery);
   }
   /**
-   * Method for deleting gallery
+   * Method for  calling database to updating gallery
+   */
+  update(id, gallery) {
+    return axios.patch(`galleries\${id}`, gallery);
+  }
+  /**
+   * Method for  calling database to deleting gallery
    */
   delete(id) {
     return axios.delete(`galleries/${id}`);

@@ -25,6 +25,8 @@
                 <button @click="addImage">Add image</button>
             </div>
             <button type="submit" class="btn btn-default" @click="saveNewGallery">Submit</button>
+            <button type="submit" class="btn btn-default" @click="editGallery">Update</button>
+            <button type="submit" class="btn btn-default" @click="">Cancel</button>
         </form>
     </div>
 </template>
@@ -80,7 +82,31 @@ export default {
         .catch(error => {
           this.errors = error.response.data.errors;
         });
+    },
+    editGallery() {
+      galleryService.update(this.$route.params.id, this.newGallery).then(() => {
+        this.$router.push({
+          name: "author-galleries",
+          params: { id: this.$route.params.id }
+        });
+      });
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (to.params.id) {
+      return galleryService.show(to.params.id).then(response => {
+        next(vm => {
+          vm.newGallery.title = response.data.title;
+          vm.newGallery.descripton = response.data.descripton;
+          response.data.images.forEach(image => {
+            vm.newGallery.images.push(image.image_url);
+          });
+
+          vm.range = response.data.images.length;
+        });
+      });
+    }
+    next();
   }
 };
 </script>

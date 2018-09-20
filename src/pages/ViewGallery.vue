@@ -2,7 +2,9 @@
     <div>
         <h1>{{gallery.title}}</h1>
         <h5 v-if="gallery.user">
-            created by: {{gallery.user.first_name}} {{gallery.user.last_name}}
+            created by:  <router-link :to="{name:'author-galleries', params:{id:gallery.user.id}}">
+                          {{gallery.user.first_name}} {{gallery.user.last_name}}
+                        </router-link>
         </h5>
         <p>
             {{gallery.description}}
@@ -30,6 +32,9 @@
         <!-- Button for deleting gallery -->
         <div v-if="isAuthenticated && getUserId === gallery.user_id">
            <button @click="deleteGallery">Delete Gallery</button>
+            <router-link type="button" class="btn btn-warning" :to="{name:'edit-gallery', params:{id:gallery.id}}">
+              Edit
+            </router-link>
         </div>
         <!-- Comments -->
         <div>

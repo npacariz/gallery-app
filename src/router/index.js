@@ -36,6 +36,12 @@ const routes = [
     name: "create-gallery"
   },
   {
+    path: "/edit-gallery/:id",
+    component: CreateGallery,
+    name: "edit-gallery"
+  },
+
+  {
     path: "/login",
     component: Login,
     name: "login"
