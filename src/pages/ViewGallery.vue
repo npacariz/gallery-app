@@ -91,15 +91,18 @@ export default {
       this.sliding = false;
     },
     deleteGallery() {
-      if (confirm("Are you sure you want to delete gallery?"))
-        galleryService.delete(this.gallery.id).then(() => {
+      if (confirm("Are you sure you want to delete gallery?")){
+         galleryService.delete(this.gallery.id).then(() => {
           this.$router.push({ name: "all-galleries" });
         });
+      }     
     },
     deleteComment(id, index) {
-      commentService.delete(id).then(() => {
-        this.gallery.comments.splice(index, 1);
-      });
+      if (confirm("Are you sure you want to delete comment?")){
+        commentService.delete(id).then(() => {
+          this.gallery.comments.splice(index, 1);
+        });
+      }
     },
     addComment() {
       commentService

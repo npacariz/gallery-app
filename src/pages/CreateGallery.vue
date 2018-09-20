@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Create Gallery</h1>
+        <h1>{{title}}</h1>
         <form @submit.prevent>
             <div class="form-group">
                 <label for="title">Title:</label>
@@ -24,7 +24,7 @@
                 </div>
                 <button @click="addImage">Add image</button>
             </div>
-            <button type="submit" class="btn btn-default" @click="saveNewGallery">Submit</button>
+            <button type="submit" class="btn btn-default" @click="submitGallery">Submit</button>
             <button type="submit" class="btn btn-default" @click="cancel">Cancel</button>
         </form>
     </div>
@@ -37,12 +37,13 @@ export default {
   data() {
     return {
       newGallery: {
-        title: "",
+        title: null,
         description: "",
         images: []
       },
       range: 1,
-      errors: []
+      errors: [],
+      title: "Create Gallery"
     };
   },
   methods: {
@@ -73,7 +74,7 @@ export default {
     },
 
     submitGallery() {
-      this.$route.params.id? this.editGallery() : this.saveNewGallery()
+      this.$route.params.id ? this.editGallery() : this.saveNewGallery()
     },
 
     saveNewGallery() {
@@ -116,6 +117,7 @@ export default {
             vm.newGallery.images.push(image.image_url);
           });
           vm.range = response.data.images.length;
+          vm.title = "Edit Gallery";
         });
       });
     }

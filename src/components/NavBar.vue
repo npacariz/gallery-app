@@ -8,7 +8,7 @@
                     <router-link   class="nav-link" :to="{name:'all-galleries' }">All Galleries</router-link>
                 </li>
                  <li class="nav-item">
-                    <router-link v-if="isAuthenticated"  class="nav-link" :to="{name:'my-galleries'}">My Galleries</router-link>
+                    <router-link v-if="isAuthenticated"  class="nav-link" :to="{name:'my-galleries'}"  force: true>My Galleries</router-link>
                 </li>
                  <li class="nav-item ">
                      <router-link  v-if="isAuthenticated" class="nav-link" :to="{name:'create-gallery'}">Create Gallery</router-link>
