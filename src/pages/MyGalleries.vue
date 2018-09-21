@@ -1,17 +1,17 @@
 <template>
-    <div>
-      <h1>My Galleries</h1>
-        <searach @searchTerm="searchDatabase"></searach>
-       <div v-if="!errors">
-            <list-of-galleries :galleries="galleries"></list-of-galleries>
-        </div>
-        <div class="alert alert-info" v-else>
-          <strong>{{errors}}</strong>
-        </div>
-        <div v-if="count > galleries.length && !errors">
-             <button @click="loadMore">Load More</button>
-        </div>
+  <div>
+    <h1 class="title-style">My Galleries</h1>
+    <searach @searchTerm="searchDatabase"></searach>
+    <div v-if="!errors">
+      <list-of-galleries :galleries="galleries"></list-of-galleries>
     </div>
+    <div class="" v-else>
+      <h4>{{errors}}</h4>
+    </div>
+    <div v-if="count > galleries.length && !errors">
+      <button class="btn btn-custom" @click="loadMore">Load More</button>
+    </div>
+  </div>
 </template>
 <script>
 import { galleryService } from "./../services/GalleryService.js";
@@ -79,4 +79,3 @@ export default {
   }
 };
 </script>
-
