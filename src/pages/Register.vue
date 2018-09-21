@@ -4,27 +4,27 @@
     <form @submit.prevent="register">
       <div class="form-group">
         <label for="first-name">First Name</label>
-        <input type="text" class="form-control" id="first-name" v-model="newUser.first_name">
+        <input type="text" class="form-control" id="first-name" v-model="newUser.first_name" required>
         <p class="alert alert-danger" v-if="errors.first_name">{{errors.first_name[0]}}</p>
       </div>
       <div class="form-group">
         <label for="last-name">Last Name</label>
-        <input type="text" class="form-control" id="last-name" v-model="newUser.last_name">
+        <input type="text" class="form-control" id="last-name" v-model="newUser.last_name" required>
         <p class="alert alert-danger" v-if="errors.last_name">{{errors.last_name[0]}}</p>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" v-model="newUser.email">
+        <input type="email" class="form-control" id="email" v-model="newUser.email" required>
         <p class="alert alert-danger" v-if="errors.email">{{errors.email[0]}}</p>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" v-model="newUser.password">
+        <input type="password" class="form-control" id="password" v-model="newUser.password" required>
         <p class="alert alert-danger" v-if="errors.password">{{errors.password[0]}}</p>
       </div>
       <div class="form-group">
         <label for="password-confirmation">Confirmed Password</label>
-        <input type="password" class="form-control" id="password-confirmation" v-model="newUser.password_confirmation">
+        <input type="password" class="form-control" id="password-confirmation" v-model="newUser.password_confirmation" required>
       </div>
       <div class="form-group">
         <input type="checkbox" class="form-check-input" v-model="newUser.terms_and_conditions">

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="title-style">Galleries of </h1>
+    <div  v-if="galleries[0]">
+      <h1 class="title-style">Galleries of {{galleries[0].user.first_name}}  {{galleries[0].user.last_name}}</h1>
+    </div>
     <searach @searchTerm="searchDatabase"></searach>
     <div v-if="!errors">
       <list-of-galleries :galleries="galleries"></list-of-galleries>
@@ -19,7 +21,7 @@ import ListOfGalleries from "./../components/ListOfGalleries.vue";
 import Searach from "./../components/Searach.vue";
 
 export default {
-  name: "MyGalleries",
+  name: "AuhtorGalleries",
   components: {
     ListOfGalleries,
     Searach

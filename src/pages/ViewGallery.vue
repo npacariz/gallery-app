@@ -11,12 +11,12 @@
       {{gallery.description}}
     </p>
     <div class="carousel-box">
-      <b-carousel id="carousel1" style="text-shadow: 1px 1px 2px #333;" controls indicators background="#ababab" :interval="4000"
-        img-width="1024" img-height="480" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
+      <b-carousel id="carousel" style="text-shadow: 1px 1px 2px #333;" controls indicators background="#ababab" :interval="4000"
+        img-width="640" img-height="480" v-model="slide" @sliding-start="onSlideStart" @sliding-end="onSlideEnd">
         <div v-for="image in gallery.images" :key="image.id">
           <a :href="image.image_url" target="_blank">
             <b-carousel-slide>
-              <img slot="img" class="d-block img-fluid w-100" width="1024" height="480" :src="image.image_url" alt="image slot">
+              <img slot="img" class="d-block img-fluid w-100" :style="{ maxWidth: '640px', maxHeight: '480px' }" :src="image.image_url" alt="image slot">
             </b-carousel-slide>
           </a>
         </div>
@@ -49,7 +49,7 @@
     <div v-if="isAuthenticated">
       <form @submit.prevent="addComment">
         <div class="form-group">
-          <textarea v-model="body" id="" cols="10" rows="7" placeholder="Comment..."></textarea>
+          <textarea v-model="body" id="" cols="10" rows="7" placeholder="Comment..." required></textarea>
           <p class="alert alert-danger" v-if="errors.body">{{errors.body[0]}}</p>
         </div>
         <button type="submit" class="btn btn-custom">Submit</button>
@@ -120,9 +120,15 @@ export default {
 };
 </script>
 <style scoped>
+#carousel {
+   width: 100%;
+   margin: 0 auto;
+   max-width: 640px;
+   max-height: 480px;
+}
 .comments-section {
   margin: 0 auto;
-  margin-top: 10%;
+  margin-top: 5%;
   max-width: 600px;
   background-color: none;
 }
