@@ -3,15 +3,15 @@
     <div  v-if="galleries[0]">
       <h1 class="title-style">Galleries of {{galleries[0].user.first_name}}  {{galleries[0].user.last_name}}</h1>
     </div>
-    <searach @searchTerm="searchDatabase"></searach>
-    <div v-if="!errors">
+     <searach @searchTerm="searchDatabase"></searach>
+    <div v-if="galleries.length">
       <list-of-galleries :galleries="galleries"></list-of-galleries>
-    </div>
-    <div class="" v-else>
-      <h4>{{errors}}</h4>
-    </div>
-    <div v-if="count > galleries.length && !errors">
-      <button class="btn btn-custom" @click="loadMore">Load More</button>
+      <div v-if="count > galleries.length">
+        <button class="btn btn-custom" @click="loadMore">Load More</button>
+      </div>
+     </div>
+     <div v-if="!galleries.length">
+      <h4>No galleries found</h4>
     </div>
   </div>
 </template>
@@ -31,8 +31,7 @@ export default {
       galleries: [],
       page: 1,
       count: 0,
-      searchTerm: "",
-      errors: null
+      searchTerm: ""
     };
   },
   methods: {
@@ -53,31 +52,18 @@ export default {
       galleryService
         .getAuthorGalleries(this.$route.params.id, this.page, this.searchTerm)
         .then(response => {
-          this.errors = null;
           this.galleries = response.data.galleries;
           this.count = response.data.count;
-        })
-        .catch(error => {
-          this.errors = error.response.data.message;
-          this.galleries = [];
         });
     }
   },
   beforeRouteEnter(to, from, next) {
-    galleryService
-      .getAuthorGalleries(to.params.id)
-      .then(response => {
-        next(vm => {
-          vm.galleries = response.data.galleries;
-          vm.count = response.data.count;
-        });
-      })
-      .catch(error => {
-        next(vm => {
-          vm.errors = error.response.data.message;
-          vm.galleries = [];
-        });
+    galleryService.getAuthorGalleries(to.params.id).then(response => {
+      next(vm => {
+        vm.galleries = response.data.galleries;
+        vm.count = response.data.count;
       });
+    });
   }
 };
 </script>

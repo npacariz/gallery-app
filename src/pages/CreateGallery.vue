@@ -104,14 +104,16 @@ export default {
         });
     },
     editGallery() {
-      galleryService.update(this.$route.params.id, this.newGallery).then(() => {
-        this.$router.push({
-          name: "view-gallery",
-          params: {
-            id: this.$route.params.id
-          }
+      galleryService
+        .update(this.$route.params.id, this.newGallery)
+        .then(() => {
+          this.$router.push({
+            name: "all-galleries"
+          });
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors;
         });
-      });
     },
     cancel() {
       if (this.$route.params.id) {

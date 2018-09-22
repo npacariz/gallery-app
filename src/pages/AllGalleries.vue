@@ -2,14 +2,14 @@
   <div>
     <h1 class="title-style">All Galleries</h1>
     <searach @searchTerm="searchDatabase"></searach>
-    <div v-if="!errors">
+    <div v-if="galleries.length">
       <list-of-galleries :galleries="galleries"></list-of-galleries>
-    </div>
-    <div v-else>
-      <h4>{{errors}}</h4>
-    </div>
-    <div v-if="count > galleries.length && !errors">
-      <button class="btn btn-custom" @click="loadMore">Load More</button>
+      <div v-if="count > galleries.length">
+        <button class="btn btn-custom" @click="loadMore">Load More</button>
+      </div>
+     </div>
+     <div v-if="!galleries.length">
+      <h4>No galleries found</h4>
     </div>
   </div>
 </template>
@@ -29,8 +29,7 @@ export default {
       galleries: [],
       page: 1,
       count: 0,
-      searchTerm: "",
-      errors: null
+      searchTerm: ""
     };
   },
   methods: {
@@ -46,17 +45,10 @@ export default {
     },
     searchGalleries() {
       this.page = 1;
-      galleryService
-        .getAll(this.page, this.searchTerm)
-        .then(response => {
-          this.errors = null;
-          this.galleries = response.data.galleries;
-          this.count = response.data.count;
-        })
-        .catch(error => {
-          this.errors = error.response.data.message;
-          this.galleries = [];
-        });
+      galleryService.getAll(this.page, this.searchTerm).then(response => {
+        this.galleries = response.data.galleries;
+        this.count = response.data.count;
+      });
     }
   },
   beforeRouteEnter(to, from, next) {

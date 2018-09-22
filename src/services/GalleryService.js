@@ -38,7 +38,7 @@ export default class GalleryService {
    * Method for  calling database to editing gallery
    */
   update(id, gallery) {
-    return axios.patch(`galleries/${id}`, gallery);
+    return axios.put(`galleries/${id}`, gallery);
   }
   /**
    * Method for  calling database to deleting gallery
