@@ -26,7 +26,7 @@ export default class GalleryService {
    * Method for getting galleries for AuthorGalleries component
    */
   getAuthorGalleries(id, page = 1, term = "") {
-    return axios.get(`author-galleries?page=${page}&term=${term}&id=${id}`);
+    return axios.get(`author-galleries/${id}?page=${page}&term=${term}`);
   }
   /**
    * Method for calling database to adding new gallery to database

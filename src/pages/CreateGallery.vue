@@ -108,7 +108,8 @@ export default {
         .update(this.$route.params.id, this.newGallery)
         .then(() => {
           this.$router.push({
-            name: "all-galleries"
+            name: "view-gallery",
+            params: { to: this.$route.params.id }
           });
         })
         .catch(error => {

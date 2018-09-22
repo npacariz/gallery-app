@@ -52,8 +52,11 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.searchGalleries();
+    galleryService.getAll().then(response => {
+      next(vm => {
+        vm.galleries = response.data.galleries;
+        vm.count = response.data.count;
+      });
     });
   }
 };
