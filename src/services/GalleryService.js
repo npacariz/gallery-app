@@ -28,7 +28,6 @@ export default class GalleryService {
   getAuthorGalleries(id, page = 1, term = "") {
     return axios.get(`author-galleries?page=${page}&term=${term}&id=${id}`);
   }
-
   /**
    * Method for calling database to adding new gallery to database
    */
@@ -46,6 +45,12 @@ export default class GalleryService {
    */
   delete(id) {
     return axios.delete(`galleries/${id}`);
+  }
+  /**
+   * Method for getting single gallery for editing with checking if user is owner of gallery
+   */
+  galleryForEdit(id) {
+    return axios.get(`galleries/${id}/edit`);
   }
 }
 

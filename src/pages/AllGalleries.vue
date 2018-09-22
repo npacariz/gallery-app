@@ -5,7 +5,7 @@
     <div v-if="!errors">
       <list-of-galleries :galleries="galleries"></list-of-galleries>
     </div>
-    <div class="" v-else>
+    <div v-else>
       <h4>{{errors}}</h4>
     </div>
     <div v-if="count > galleries.length && !errors">

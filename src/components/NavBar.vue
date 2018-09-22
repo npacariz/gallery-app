@@ -5,7 +5,7 @@
         <router-link class="navbar-brand" :to="{name:'all-galleries'}">Gallery App</router-link>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link nav-buttons" :to="{name:'all-galleries' }">
+            <router-link class="nav-link nav-buttons" :to="{name:'all-galleries' }" >
               All Galleries
             </router-link>
           </li>
